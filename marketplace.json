@@ -1,0 +1,17 @@
+{
+  "name": "trails-skills",
+  "description": "Official Trails agent skill for Claude Code - integrate cross-chain infrastructure with Widget, Headless SDK, or Direct API",
+  "owner": {
+    "name": "0xtrails",
+    "email": "jlawton@polygon.technology"
+  },
+  "repository": "https://github.com/0xsequence-demos/trails-skills",
+  "homepage": "https://trails.build",
+  "plugins": [
+    {
+      "name": "trails",
+      "description": "Integrate Trails cross-chain infrastructure — Widget, Headless SDK, or Direct API",
+      "source": "./plugins/trails"
+    }
+  ]
+}
