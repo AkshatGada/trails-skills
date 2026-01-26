@@ -74,7 +74,7 @@ React hooks for custom implementations:
 - Transaction history and status tracking
 
 ```tsx
-const { sendTransaction } = useTrailsSendTransaction();
+const { useQuote } = useQuote();
 const { data: tokens } = useSupportedTokens();
 ```
 
