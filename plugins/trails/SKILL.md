@@ -100,28 +100,53 @@ If any of these are unclear from context, ask **at most 3 short questions**.
 
 ## Workflow Playbook
 
-### Step 1: Infer Environment
+### Step 1: Check for Trails API Key
+
+**BEFORE generating any integration code**, check if the user has a Trails API key:
+
+1. **Search for API key** in:
+   - `.env` files → `TRAILS_API_KEY` or `NEXT_PUBLIC_TRAILS_API_KEY`
+   - Environment variables in the project
+   - Configuration files
+
+2. **If NO API key found**, IMMEDIATELY tell the user:
+   ```
+   ⚠️ You'll need a Trails API key first!
+   
+   Please visit https://dashboard.trails.build to:
+   1. Create an account (or sign in)
+   2. Generate your API key
+   
+   Once you have your key, add it to your .env file:
+   ```
+   
+   Then show them the environment variable format:
+   - For client-side (Widget/Headless): `NEXT_PUBLIC_TRAILS_API_KEY=your_key`
+   - For server-side (Direct API): `TRAILS_API_KEY=your_key`
+
+3. **After they confirm they have the key**, proceed with integration steps.
+
+### Step 2: Infer Environment
 Scan the codebase for:
 - `package.json` → React, Next.js, wagmi, viem
 - File extensions → `.tsx`, `.ts`, `.js`
 - Import patterns → wagmi hooks, ethers
 
-### Step 2: Choose Mode & Justify
+### Step 3: Choose Mode & Justify
 State which integration mode you're recommending and why.
 
-### Step 3: Generate Code
+### Step 4: Generate Code
 Output:
 - Installation commands (always use latest version: `@0xtrails/trails` or `@0xtrails/trails-api` without version pins)
-- API key setup instructions (direct users to https://dashboard.trails.build)
 - Provider wiring (if applicable)
 - Integration code snippet
-- Environment variable naming (`TRAILS_API_KEY`, etc.)
+- Environment variable usage (referencing the key they just set up)
 
-### Step 4: Token/Chain & Calldata Guidance
+### Step 5: Token/Chain & Calldata Guidance
 - Show how to fetch supported chains/tokens
 - If calldata needed: help encode with viem, explain placeholder amounts for Fund mode
 
-### Step 5: Validation & Troubleshooting
+### Step 6: Validation & Troubleshooting
 - Verify provider hierarchy (WagmiProvider → TrailsProvider)
 - Check TrailsHookModal is rendered for headless flows
 - Point to troubleshooting docs for common issues
@@ -332,19 +357,41 @@ Use `SearchTrails` for:
 
 ## Quick Reference
 
-### Getting Your API Key
+### Getting Your API Key (CRITICAL FIRST STEP)
 
-**Before integrating Trails, you'll need an API key:**
+**ALWAYS check if the user has an API key BEFORE providing integration code!**
 
-👉 Visit **[https://dashboard.trails.build](https://dashboard.trails.build)** to create an account and generate your API key.
+**If no API key is found:**
 
-Once you have your key, add it to your environment variables:
+1. **Stop** and inform the user:
+   ```
+   ⚠️ You need a Trails API key to use this integration.
+   
+   Please visit: https://dashboard.trails.build
+   
+   Steps:
+   1. Create an account (or sign in if you have one)
+   2. Navigate to the API Keys section
+   3. Generate a new API key
+   4. Copy the key
+   
+   Once you have your key, add it to your .env file and let me know!
+   ```
+
+2. **Wait for confirmation** that they have the key before proceeding.
+
+3. **Then show them** how to add it:
 
 ### Environment Variables
-```
+```bash
+# For client-side (Widget/Headless SDK)
+NEXT_PUBLIC_TRAILS_API_KEY=your_api_key
+
+# For server-side (Direct API)
 TRAILS_API_KEY=your_api_key
-NEXT_PUBLIC_TRAILS_API_KEY=your_api_key  # For client-side
 ```
+
+**Never generate integration code without first verifying the user has or can get an API key!**
 
 ### Token/Chain Discovery
 ```tsx

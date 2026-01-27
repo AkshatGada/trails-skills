@@ -5,12 +5,11 @@
 
 An expert AI agent skill that helps you integrate [Trails](https://trails.build) cross-chain infrastructure into your applications with intelligent guidance and working code generation.
 
-> **Quick Start**: In Claude Code, run:
+> **Quick Start**: Install with one command:
+> ```bash
+> npx skills add 0xsequence-demos/trails-skills
 > ```
-> /plugin marketplace add 0xsequence-demos/trails-skills
-> /plugin install trails@0xsequence-demos/trails-skills
-> ```
-> Then ask Claude: *"I want to add cross-chain payments to my Next.js app"*
+> Then ask your AI agent: *"I want to add cross-chain payments to my Next.js app"*
 
 ---
 
@@ -118,32 +117,44 @@ The skill automatically activates when you mention:
 
 ## Installation
 
-### Claude Code Installation
+### Universal Installation (Recommended)
 
-In Claude Code, run these commands:
+Install using the universal [Skills CLI](https://skills.sh/):
+
+```bash
+npx skills add 0xsequence-demos/trails-skills
+```
+
+This works with:
+- Claude Code
+- Cursor
+- Cline
+- Windsurf
+- And other AI coding agents
+
+Then **restart your AI agent** and try asking:
+
+```
+I want to integrate Trails into my Next.js app
+```
+
+### Claude Code (Native)
+
+Alternatively, in Claude Code:
 
 ```
 /plugin marketplace add 0xsequence-demos/trails-skills
 /plugin install trails@0xsequence-demos/trails-skills
 ```
 
-Then **restart Claude Code completely** (not just reload).
+Then **restart Claude Code completely**.
 
 ### Verify Installation
 
-After restarting, try asking Claude:
-
-```
-I want to integrate Trails into my Next.js app
-```
-
-or
-
-```
-How do I add cross-chain payments with Trails?
-```
-
-The skill should activate automatically and guide you through the integration.
+The skill should activate automatically when you mention:
+- "trails", "cross-chain", "bridge", "swap"
+- "accept any token", "cross-chain payments"
+- "pay widget", "fund mode", "earn mode"
 
 ---
 
@@ -233,16 +244,29 @@ const receipt = await trails.executeIntent({ intentId: intent.intentId });
 
 ## Getting Your Trails API Key
 
+**You'll need an API key before integrating Trails.** The skill will prompt you to get one if you don't have it yet.
+
+### Get Your Key
+
 1. Visit **[https://dashboard.trails.build](https://dashboard.trails.build)**
-2. Create an account and generate your API key
-3. Set it as an environment variable:
-   ```bash
-   # For React/Next.js (client-side)
-   NEXT_PUBLIC_TRAILS_API_KEY=your_api_key
-   
-   # For server-side
-   TRAILS_API_KEY=your_api_key
-   ```
+2. Create an account (or sign in if you have one)
+3. Navigate to the API Keys section
+4. Generate a new API key
+5. Copy your key
+
+### Add to Your Project
+
+Create or update your `.env` file:
+
+```bash
+# For React/Next.js (client-side)
+NEXT_PUBLIC_TRAILS_API_KEY=your_api_key_here
+
+# For server-side (Direct API)
+TRAILS_API_KEY=your_api_key_here
+```
+
+**The skill will check for this automatically and guide you through the setup!**
 
 ---
 
