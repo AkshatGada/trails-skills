@@ -12,6 +12,11 @@
       "name": "trails",
       "description": "Integrate Trails cross-chain infrastructure — Widget, Headless SDK, or Direct API",
       "source": "./plugins/trails"
+    },
+    {
+      "name": "frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality",
+      "source": "./plugins/frontend-design"
     }
   ]
 }

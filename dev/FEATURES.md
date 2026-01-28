@@ -148,14 +148,14 @@ function App() {
 }
 
 // Hook usage in your component
-import { useQuote, useTrails, useSupportedTokens } from '@0xtrails/trails';
+import { useQuote, useSupportedTokens } from '@0xtrails/trails';
 
 function CustomSwapButton() {
-  const { quote, isPending } = useQuote({ /* params */ });
-  const { executeIntent } = useTrails();
+  const { quote, isPending, isSuccess } = useQuote({ /* params */ });
   const { data: tokens } = useSupportedTokens();
   
   // Your custom UI with full control
+  // Executes automatically when quote is ready
 }
 ```
 

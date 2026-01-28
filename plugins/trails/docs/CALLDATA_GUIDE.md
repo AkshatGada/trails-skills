@@ -265,7 +265,7 @@ function VaultDeposit({ vaultAddress, userAddress }: {
 ## Using Calldata with Headless SDK
 
 ```tsx
-import { useQuote, useTrails } from '@0xtrails/trails';
+import { useQuote } from '@0xtrails/trails';
 import { encodeFunctionData } from 'viem';
 import { useState } from 'react';
 
@@ -282,7 +282,7 @@ function useVaultDeposit(vaultAddress: `0x${string}`, userAddress: `0x${string}`
       })
     : undefined;
 
-  const { quote, isPending } = useQuote(
+  const { quote, isPending, isSuccess } = useQuote(
     inputAmount && calldata
       ? {
           destinationChainId: 42161,
@@ -294,15 +294,7 @@ function useVaultDeposit(vaultAddress: `0x${string}`, userAddress: `0x${string}`
       : null
   );
 
-  const { executeIntent, isExecuting } = useTrails();
-
-  const deposit = () => {
-    if (quote) {
-      executeIntent(quote);
-    }
-  };
-
-  return { deposit, isPending: isPending || isExecuting, setInputAmount, inputAmount };
+  return { quote, isPending, isSuccess, setInputAmount, inputAmount };
 }
 ```
 

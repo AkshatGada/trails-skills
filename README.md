@@ -125,7 +125,11 @@ Install using the universal [Skills CLI](https://skills.sh/):
 npx skills add 0xsequence-demos/trails-skills
 ```
 
-This works with:
+This installs **both skills**:
+- **trails** - Cross-chain infrastructure integration
+- **frontend-design** - Production-grade UI design (from [Anthropic](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design))
+
+Works with:
 - Claude Code
 - Cursor
 - Cline
@@ -138,6 +142,12 @@ Then **restart your AI agent** and try asking:
 I want to integrate Trails into my Next.js app
 ```
 
+Or for design work:
+
+```
+Build me a beautiful landing page for my crypto app
+```
+
 ### Claude Code (Native)
 
 Alternatively, in Claude Code:
@@ -145,16 +155,21 @@ Alternatively, in Claude Code:
 ```
 /plugin marketplace add 0xsequence-demos/trails-skills
 /plugin install trails@0xsequence-demos/trails-skills
+/plugin install frontend-design@0xsequence-demos/trails-skills
 ```
 
 Then **restart Claude Code completely**.
 
 ### Verify Installation
 
-The skill should activate automatically when you mention:
+**Trails skill** activates when you mention:
 - "trails", "cross-chain", "bridge", "swap"
 - "accept any token", "cross-chain payments"
 - "pay widget", "fund mode", "earn mode"
+
+**Frontend-design skill** activates when you mention:
+- "build a component", "create a page", "design an interface"
+- "landing page", "dashboard", "UI", "frontend"
 
 ---
 

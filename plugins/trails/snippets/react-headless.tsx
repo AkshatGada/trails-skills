@@ -55,30 +55,22 @@ export function Providers({ children }: { children: React.ReactNode }) {
 // 2. BASIC SEND TRANSACTION
 // ============================================
 
-import { useQuote, useTrails } from '@0xtrails/trails';
+import { useQuote } from '@0xtrails/trails';
 
 export function SendButton() {
-  const { quote, isPending, isError, error } = useQuote({
+  const { quote, isPending, isSuccess, isError, error } = useQuote({
     destinationChainId: 8453,
     destinationTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     destinationAmount: '10000000', // 10 USDC
     destinationRecipient: '0xRecipientAddress',
   });
 
-  const { executeIntent, isExecuting, executionResult } = useTrails();
-
-  const handleSend = () => {
-    if (quote) {
-      executeIntent(quote);
-    }
-  };
-
   return (
     <div>
-      <button onClick={handleSend} disabled={isPending || isExecuting || !quote}>
-        {isPending || isExecuting ? 'Processing...' : 'Send 10 USDC'}
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Processing...' : isSuccess ? 'Sent!' : 'Send 10 USDC'}
       </button>
-      {executionResult && <p>Success! Intent ID: {executionResult.intentId}</p>}
+      {isSuccess && <p>Success! Intent ID: {quote?.intentId}</p>}
       {isError && <p>Error: {error?.message}</p>}
     </div>
   );
@@ -166,7 +158,7 @@ export function CustomSwapUI() {
   const token = destTokens?.find((t) => t.address === selectedToken);
   const parsedAmount = amount && token ? parseUnits(amount, token.decimals ?? 18) : undefined;
 
-  const { quote, isPending, error } = useQuote(
+  const { quote, isPending, isSuccess, error } = useQuote(
     parsedAmount && selectedToken && address
       ? {
           destinationChainId: destChain,
@@ -176,14 +168,6 @@ export function CustomSwapUI() {
         }
       : null
   );
-
-  const { executeIntent, isExecuting, executionResult } = useTrails();
-
-  const handleSwap = () => {
-    if (quote) {
-      executeIntent(quote);
-    }
-  };
 
   return (
     <div className="swap-container">
@@ -242,11 +226,12 @@ export function CustomSwapUI() {
         />
       </label>
 
-      <button onClick={handleSwap} disabled={isPending || isExecuting || !quote}>
-        {isPending || isExecuting ? 'Swapping...' : 'Swap'}
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Swapping...' : isSuccess ? 'Complete!' : 'Swap'}
       </button>
 
-      {executionResult && <p>Swap successful!</p>}
+      {isSuccess && <p>Swap successful!</p>}
+      {error && <p>Error: {error.message}</p>}
       {error && <p>Error: {error.message}</p>}
     </div>
   );
@@ -292,7 +277,7 @@ export function VaultDeposit({
       })
     : undefined;
 
-  const { quote, isPending } = useQuote(
+  const { quote, isPending, isSuccess } = useQuote(
     amount && calldata
       ? {
           destinationChainId: 42161,
@@ -304,14 +289,6 @@ export function VaultDeposit({
       : null
   );
 
-  const { executeIntent, isExecuting, executionResult } = useTrails();
-
-  const handleDeposit = () => {
-    if (quote) {
-      executeIntent(quote);
-    }
-  };
-
   return (
     <div>
       <h3>Deposit to Vault</h3>
@@ -321,10 +298,10 @@ export function VaultDeposit({
         onChange={(e) => setAmount(e.target.value)}
         placeholder="Amount (USDC)"
       />
-      <button onClick={handleDeposit} disabled={isPending || isExecuting || !quote}>
-        {isPending || isExecuting ? 'Depositing...' : 'Deposit'}
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Depositing...' : isSuccess ? 'Complete!' : 'Deposit'}
       </button>
-      {executionResult && <p>Deposit successful!</p>}
+      {isSuccess && <p>Deposit successful!</p>}
     </div>
   );
 }
@@ -365,36 +342,25 @@ export function TransactionHistory() {
 // ============================================
 
 export function RobustSendButton() {
-  const { quote, isPending, error } = useQuote({
+  const { quote, isPending, isSuccess, error, refetch } = useQuote({
     destinationChainId: 8453,
     destinationTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     destinationAmount: '10000000',
     destinationRecipient: '0xRecipientAddress',
   });
 
-  const { executeIntent, isExecuting, executionError, resetExecution } = useTrails();
-
-  const handleSend = async () => {
-    if (quote) {
-      try {
-        await executeIntent(quote);
-      } catch (e) {
-        console.error('Transaction failed:', e);
-      }
-    }
-  };
-
   return (
     <div>
-      <button onClick={handleSend} disabled={isPending || isExecuting || !quote}>
-        Send
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Sending...' : isSuccess ? 'Sent!' : 'Send'}
       </button>
-      {(error || executionError) && (
+      {error && (
         <div>
-          <p>Error: {error?.message || executionError?.message}</p>
-          <button onClick={resetExecution}>Try Again</button>
+          <p>Error: {error.message}</p>
+          <button onClick={() => refetch()}>Try Again</button>
         </div>
       )}
+      {isSuccess && <p>Transaction complete!</p>}
     </div>
   );
 }

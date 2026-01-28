@@ -386,39 +386,28 @@ const baseInfo = await getChainInfo(8453);
 ## Error Handling Pattern
 
 ```tsx
-import { useQuote, useTrails } from '@0xtrails/trails';
+import { useQuote } from '@0xtrails/trails';
 
 function RobustSendButton() {
-  const { quote, isPending, error } = useQuote({
+  const { quote, isPending, isSuccess, error, refetch } = useQuote({
     destinationChainId: 8453,
     destinationTokenAddress: '0x...',
     destinationAmount: '10000000',
     destinationRecipient: '0x...',
   });
 
-  const { executeIntent, isExecuting, executionError, resetExecution } = useTrails();
-
-  const handleSend = async () => {
-    if (quote) {
-      try {
-        await executeIntent(quote);
-      } catch (e) {
-        console.error('Transaction failed:', e);
-      }
-    }
-  };
-
   return (
     <div>
-      <button onClick={handleSend} disabled={isPending || isExecuting || !quote}>
-        Send
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Sending...' : isSuccess ? 'Sent!' : 'Send'}
       </button>
-      {(error || executionError) && (
+      {error && (
         <div>
-          <p>Error: {error?.message || executionError?.message}</p>
-          <button onClick={resetExecution}>Try Again</button>
+          <p>Error: {error.message}</p>
+          <button onClick={() => refetch()}>Try Again</button>
         </div>
       )}
+      {isSuccess && <p>Transaction complete!</p>}
     </div>
   );
 }
