@@ -265,44 +265,31 @@ function VaultDeposit({ vaultAddress, userAddress }: {
 ## Using Calldata with Headless SDK
 
 ```tsx
-import { useQuote, useTrails } from '@0xtrails/trails';
+import { useTrailsSendTransaction } from '@0xtrails/trails';
 import { encodeFunctionData } from 'viem';
-import { useState } from 'react';
 
 const PLACEHOLDER = BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
 
 function useVaultDeposit(vaultAddress: `0x${string}`, userAddress: `0x${string}`) {
-  const [inputAmount, setInputAmount] = useState('');
+  const { sendTransaction, isPending } = useTrailsSendTransaction();
 
-  const calldata = inputAmount
-    ? encodeFunctionData({
-        abi: VAULT_ABI,
-        functionName: 'deposit',
-        args: [PLACEHOLDER, userAddress],
-      })
-    : undefined;
+  const deposit = (inputAmount: string) => {
+    const calldata = encodeFunctionData({
+      abi: VAULT_ABI,
+      functionName: 'deposit',
+      args: [PLACEHOLDER, userAddress],
+    });
 
-  const { quote, isPending } = useQuote(
-    inputAmount && calldata
-      ? {
-          destinationChainId: 42161,
-          destinationTokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-          destinationRecipient: vaultAddress,
-          destinationCalldata: calldata,
-          sourceAmount: inputAmount, // User's input amount
-        }
-      : null
-  );
-
-  const { executeIntent, isExecuting } = useTrails();
-
-  const deposit = () => {
-    if (quote) {
-      executeIntent(quote);
-    }
+    sendTransaction({
+      destinationChainId: 42161,
+      destinationTokenAddress: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+      destinationRecipient: vaultAddress,
+      destinationCalldata: calldata,
+      sourceAmount: inputAmount, // User's input amount
+    });
   };
 
-  return { deposit, isPending: isPending || isExecuting, setInputAmount, inputAmount };
+  return { deposit, isPending };
 }
 ```
 

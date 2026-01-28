@@ -73,7 +73,7 @@ How do I build my own payment flow with Trails hooks?
 ```
 
 ```
-Show me how to use useTrailsSendTransaction with my custom button
+Show me how to use useQuote and useTrails with my custom button
 ```
 
 ## Backend API Tests

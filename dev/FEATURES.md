@@ -148,10 +148,11 @@ function App() {
 }
 
 // Hook usage in your component
-import { useTrailsSendTransaction, useSupportedTokens } from '@0xtrails/trails';
+import { useQuote, useTrails, useSupportedTokens } from '@0xtrails/trails';
 
 function CustomSwapButton() {
-  const { sendTransaction, isPending, isSuccess } = useTrailsSendTransaction();
+  const { quote, isPending } = useQuote({ /* params */ });
+  const { executeIntent } = useTrails();
   const { data: tokens } = useSupportedTokens();
   
   // Your custom UI with full control

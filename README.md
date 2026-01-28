@@ -205,20 +205,23 @@ import { TrailsWidget } from '@0xtrails/trails';
 ### Headless SDK: Custom Swap
 
 ```tsx
-import { useTrailsSendTransaction } from '@0xtrails/trails';
+import { useQuote } from '@0xtrails/trails';
 
 function SwapButton() {
-  const { sendTransaction, isPending } = useTrailsSendTransaction();
+  const { quote, isPending, isSuccess } = useQuote({
+    destinationChainId: 8453,
+    destinationTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+    destinationAmount: '1000000',
+  });
   
-  const handleSwap = () => {
-    sendTransaction({
-      destinationChainId: 8453,
-      destinationTokenAddress: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-      destinationAmount: '1000000',
-    });
-  };
-  
-  return <button onClick={handleSwap} disabled={isPending}>Swap</button>;
+  return (
+    <div>
+      <button disabled={isPending || isSuccess}>
+        {isPending ? 'Processing...' : isSuccess ? 'Complete!' : 'Swap'}
+      </button>
+      {isSuccess && <p>Swap successful!</p>}
+    </div>
+  );
 }
 ```
 

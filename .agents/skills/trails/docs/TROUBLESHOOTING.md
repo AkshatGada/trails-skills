@@ -67,7 +67,7 @@ function App() {
 
 ### Error: "TrailsHookModal must be rendered"
 
-**Cause**: Using Trails hooks without the modal component.
+**Cause**: Using `useTrailsSendTransaction` without the modal component.
 
 **Solution**: Add `TrailsHookModal` inside both providers:
 
@@ -217,8 +217,7 @@ const hasEnough = balance && BigInt(balance.value) >= BigInt(requiredAmount);
 **Solution**: Handle gracefully in UI:
 
 ```typescript
-const { quote, error } = useQuote({ ...params });
-const { executeIntent } = useTrails();
+const { sendTransaction, error } = useTrailsSendTransaction();
 
 if (error?.message?.includes('rejected')) {
   // Show user-friendly message

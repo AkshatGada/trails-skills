@@ -242,21 +242,21 @@ Use `SearchTrails` for:
    ```
 5. **Hook usage**:
    ```tsx
-   import { useQuote, useSupportedTokens } from '@0xtrails/trails';
+   import { useTrailsSendTransaction, useSupportedTokens } from '@0xtrails/trails';
 
    function SwapPanel() {
      const { data: tokens } = useSupportedTokens();
-     const { quote, isPending, isSuccess } = useQuote({
-       destinationChainId: 8453,
-       destinationTokenAddress: '0x...',
-       destinationAmount: '1000000',
-     });
+     const { sendTransaction, isPending } = useTrailsSendTransaction();
 
-     return (
-       <button disabled={isPending || isSuccess}>
-         {isPending ? 'Swapping...' : isSuccess ? 'Complete!' : 'Swap'}
-       </button>
-     );
+     const handleSwap = () => {
+       sendTransaction({
+         destinationChainId: 8453,
+         destinationTokenAddress: '0x...',
+         destinationAmount: '1000000',
+       });
+     };
+
+     return <button onClick={handleSwap} disabled={isPending}>Swap</button>;
    }
    ```
 

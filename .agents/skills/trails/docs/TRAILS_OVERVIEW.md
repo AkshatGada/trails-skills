@@ -91,10 +91,9 @@ import { TrailsWidget } from '@0xtrails/trails';
 Programmatic control with your own UI. Requires `TrailsProvider` and `TrailsHookModal`.
 
 ```tsx
-import { useQuote } from '@0xtrails/trails';
+import { useTrailsSendTransaction } from '@0xtrails/trails';
 
-const { quote, isPending, isSuccess } = useQuote({ ...params });
-// Executes automatically when quote is ready
+const { sendTransaction } = useTrailsSendTransaction();
 ```
 
 ### 3. Direct API
