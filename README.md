@@ -78,18 +78,26 @@ const { data: tokens } = useSupportedTokens();
 ```
 
 ### 🔌 Direct API (Server-Side)
-**Best for:** Backend services, automation, non-React apps
+**Best for:** Backend services, automation, non-React apps, AI agents
 
 REST API for server-side integrations:
-- Quote generation for cross-chain intents
-- Intent commitment and execution
+- **SDK Client** for Node.js/TypeScript projects
+- **Raw HTTP/Fetch** for AI agents, Python, Go, or any language
+- Quote generation and intent execution
 - Transaction monitoring and receipts
 
 ```typescript
-// Quote → Commit → Execute → Wait
+// SDK Client (Node.js)
 const quote = await trails.quoteIntent({ ... });
 const intent = await trails.commitIntent({ quoteId });
 const receipt = await trails.executeIntent({ intentId });
+
+// Or Raw Fetch (Universal)
+const quote = await fetch('https://api.trails.build/quote', {
+  method: 'POST',
+  headers: { 'Authorization': `Bearer ${apiKey}` },
+  body: JSON.stringify({ ...params })
+});
 ```
 
 ---
@@ -125,11 +133,8 @@ Install using the universal [Skills CLI](https://skills.sh/):
 npx skills add 0xsequence-demos/trails-skills
 ```
 
-This installs **both skills**:
-- **trails** - Cross-chain infrastructure integration
-- **frontend-design** - Production-grade UI design (from [Anthropic](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design))
-
-Works with:
+This works with:
+- OpenClaw
 - Claude Code
 - Cursor
 - Cline
@@ -142,12 +147,6 @@ Then **restart your AI agent** and try asking:
 I want to integrate Trails into my Next.js app
 ```
 
-Or for design work:
-
-```
-Build me a beautiful landing page for my crypto app
-```
-
 ### Claude Code (Native)
 
 Alternatively, in Claude Code:
@@ -155,21 +154,16 @@ Alternatively, in Claude Code:
 ```
 /plugin marketplace add 0xsequence-demos/trails-skills
 /plugin install trails@0xsequence-demos/trails-skills
-/plugin install frontend-design@0xsequence-demos/trails-skills
 ```
 
 Then **restart Claude Code completely**.
 
 ### Verify Installation
 
-**Trails skill** activates when you mention:
+The skill should activate automatically when you mention:
 - "trails", "cross-chain", "bridge", "swap"
 - "accept any token", "cross-chain payments"
 - "pay widget", "fund mode", "earn mode"
-
-**Frontend-design skill** activates when you mention:
-- "build a component", "create a page", "design an interface"
-- "landing page", "dashboard", "UI", "frontend"
 
 ---
 

@@ -268,11 +268,10 @@ Use `SearchTrails` for:
 
 1. **Mode**: Direct API — server-side orchestration
 2. **Get API Key**: Visit [https://dashboard.trails.build](https://dashboard.trails.build) to get your API key
-3. **Install**:
-   ```bash
-   pnpm add @0xtrails/trails-api
-   ```
-4. **Full flow**:
+3. **Choose approach**:
+   - **SDK Client** (Node.js): `pnpm add @0xtrails/trails-api`
+   - **Raw Fetch** (AI agents, Python, etc.): No installation, use HTTP endpoints
+4. **SDK Client flow**:
    ```typescript
    import { TrailsAPI } from '@0xtrails/trails-api';
 
@@ -306,6 +305,29 @@ Use `SearchTrails` for:
 
      return receipt;
    }
+   ```
+
+**Or Raw Fetch (for AI agents like OpenClaw, Python, etc.):**
+   ```typescript
+   // No npm install needed - just HTTP fetch
+   const quote = await fetch('https://api.trails.build/quote', {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+       'Authorization': `Bearer ${process.env.TRAILS_API_KEY}`
+     },
+     body: JSON.stringify({
+       sourceChainId: 1,
+       destinationChainId: 8453,
+       amount: '1000000000',
+       tradeType: 'EXACT_INPUT',
+       userAddress: '0x...'
+     })
+   });
+   
+   const quoteData = await quote.json();
+   // Then commit, execute, and poll status via fetch
+   // See API_RECIPES.md for complete raw fetch examples
    ```
 
 ### Example 4: Fund Mode with Calldata (DeFi Deposit)
