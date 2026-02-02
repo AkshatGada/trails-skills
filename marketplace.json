@@ -1,5 +1,7 @@
 {
   "name": "trails-skills",
+  "slug": "trails-skills",
+  "displayName": "Trails Skills",
   "description": "Official Trails agent skill for Claude Code - integrate cross-chain infrastructure with Widget, Headless SDK, or Direct API",
   "owner": {
     "name": "0xtrails",
@@ -10,6 +12,8 @@
   "plugins": [
     {
       "name": "trails",
+      "slug": "trails",
+      "displayName": "Trails",
       "description": "Integrate Trails cross-chain infrastructure — Widget, Headless SDK, or Direct API",
       "source": "./plugins/trails"
     }
