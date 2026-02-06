@@ -15,7 +15,7 @@ An expert AI agent skill that helps you integrate [Trails](https://trails.build)
 
 ## What is Trails?
 
-Trails enables seamless cross-chain token transfers, swaps, and smart contract execution across multiple blockchain networks. Users can pay, swap, or fund with any token from any supported chain, and Trails handles the routing, bridging, and execution automatically.
+Trails enables seamless cross-chain token transfers, swaps, and smart contract execution across multiple blockchain networks. Users can pay, swap, or fund with any token from any supported chain, and Trails handles the routing, bridging, and execution automatically available to download as `npm i 0xtrails`
 
 ### Core Capabilities
 
