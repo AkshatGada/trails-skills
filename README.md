@@ -74,7 +74,7 @@ React hooks for custom implementations:
 
 ```tsx
 const { useQuote } = useQuote();
-const { data: tokens } = useSupportedTokens();
+const { supportedTokens: tokens } = useSupportedTokens();
 ```
 
 ### 🔌 Direct API (Server-Side)
